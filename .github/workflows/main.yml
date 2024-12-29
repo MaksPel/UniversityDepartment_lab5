@@ -3,7 +3,7 @@ name: build and test
 on:
   push:
   pull_request:
-    branches: [ lab4 ]
+    branches: [ master ]
     paths:
     - '.cs'
     - '.csproj'
