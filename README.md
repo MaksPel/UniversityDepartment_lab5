@@ -1,1 +1,1 @@
-# UniversityDepartment_lab5
+[![build and test](https://github.com/MaksPel/UniversityDepartment_lab5/actions/workflows/main.yml/badge.svg)](https://github.com/MaksPel/UniversityDepartment_lab5/actions/workflows/main.yml) Лабораторная работа 5
