@@ -1,0 +1,13 @@
+﻿@model UniversityDepartment_lab5.ViewModels.Users.IdentityUserViewModel
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" />
+    </div>
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+    </div>
+    <button type="submit">Save</button>
+</form>

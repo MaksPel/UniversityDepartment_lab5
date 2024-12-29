@@ -1,0 +1,30 @@
+﻿@model UniversityDepartment_lab5.ViewModels.Users.IdentityUserViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<div>
+    <h4>IdentityUserViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

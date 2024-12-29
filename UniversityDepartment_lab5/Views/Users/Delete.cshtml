@@ -1,0 +1,10 @@
+﻿@model UniversityDepartment_lab5.ViewModels.Users.IdentityUserViewModel
+<h1>Delete</h1>
+<p>Are you sure you want to delete this user?</p>
+<p>Id: @Model.Id</p>
+<p>UserName: @Model.UserName</p>
+<p>Email: @Model.Email</p>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit">Delete</button>
+</form>

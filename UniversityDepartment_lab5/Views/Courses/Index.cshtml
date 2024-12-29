@@ -1,0 +1,209 @@
+﻿@model UniversityDepartment_lab5.ViewModels.Courses.CourseViewModel
+@using UniversityDepartment_lab5.ViewModels.Courses;
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<h1>Курсы</h1>
+
+@using (Html.BeginForm("Index", "Courses", FormMethod.Get, new { @class = "mb-3" }))
+{
+    <div class="row">
+        <div class="col-md-4">
+            @Html.TextBox("specialty", Model.Specialty, new { @class = "form-control", placeholder = "Название специальности" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("courseNumber", "", new { @class = "form-control", placeholder = "Номер курса" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBox("semesterNumber", "", new { @class = "form-control", placeholder = "Номер семестра" })
+        </div>
+        <div class="col-md-4 mt-2">
+            <button type="submit" class="btn btn-primary">Фильтровать</button>
+            <a asp-action="Index" class="btn btn-secondary">Сбросить</a>
+        </div>
+    </div>
+}
+
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.CourseNumberAsc ? SortState.CourseNumberDesc : SortState.CourseNumberAsc)"
+                   asp-route-page="@Model.PageViewModel.PageNumber"
+                   asp-route-courseNumber="@Model.CourseNumber"
+                   asp-route-semesterNumber="@Model.SemesterNumber"
+                   asp-route-specialty="@Model.Specialty">
+                    Номер курса
+                    @if (Model.SortViewModel.CurrentState == SortState.CourseNumberAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.CourseNumberDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.SemesterAsc ? SortState.SemesterDesc : SortState.SemesterAsc)"
+                   asp-route-page="@Model.PageViewModel.PageNumber"
+                   asp-route-courseNumber="@Model.CourseNumber"
+                   asp-route-semesterNumber="@Model.SemesterNumber"
+                   asp-route-specialty="@Model.Specialty">
+                    Номер семестра
+                    @if (Model.SortViewModel.CurrentState == SortState.SemesterAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.SemesterDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.SpecialtyAsc ? SortState.SpecialtyDesc : SortState.SpecialtyAsc)"
+                   asp-route-page="@Model.PageViewModel.PageNumber"
+                   asp-route-courseNumber="@Model.CourseNumber"
+                   asp-route-semesterNumber="@Model.SemesterNumber"
+                   asp-route-specialty="@Model.Specialty">
+                    Специальность
+                    @if (Model.SortViewModel.CurrentState == SortState.SpecialtyAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.SpecialtyDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Courses)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SemesterNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Specialty.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CourseId">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.CourseId">Детали</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CourseId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Навигация по страницам">
+    <ul class="pagination">
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+                   asp-route-specialty="@Model.Specialty"
+                   asp-route-courseNumber="@Model.CourseNumber"
+                   asp-route-semesterNumber="@Model.SemesterNumber"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    Предыдущая
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(1 == Model.PageViewModel.PageNumber ? "active" : "")">
+            <a class="page-link" asp-action="Index"
+               asp-route-page="1"
+               asp-route-specialty="@Model.Specialty"
+               asp-route-courseNumber="@Model.CourseNumber"
+               asp-route-semesterNumber="@Model.SemesterNumber"
+               asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                1
+            </a>
+        </li>
+
+        @if (Model.PageViewModel.PageNumber > 3)
+        {
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        }
+
+        @for (int i = Math.Max(2, Model.PageViewModel.PageNumber - 1);
+        i <= Math.Min(Model.PageViewModel.TotalPages - 1, Model.PageViewModel.PageNumber + 1);
+        i++)
+        {
+            <li class="page-item @(i == Model.PageViewModel.PageNumber ? "active" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-specialty="@Model.Specialty"
+                   asp-route-courseNumber="@Model.CourseNumber"
+                   asp-route-semesterNumber="@Model.SemesterNumber"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    @i
+                </a>
+            </li>
+        }
+
+        @if (Model.PageViewModel.PageNumber < Model.PageViewModel.TotalPages - 2)
+        {
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        }
+
+        <li class="page-item @(Model.PageViewModel.TotalPages == Model.PageViewModel.PageNumber ? "active" : "")">
+            <a class="page-link" asp-action="Index"
+               asp-route-page="@Model.PageViewModel.TotalPages"
+               asp-route-specialty="@Model.Specialty"
+               asp-route-courseNumber="@Model.CourseNumber"
+               asp-route-semesterNumber="@Model.SemesterNumber"
+               asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                @Model.PageViewModel.TotalPages
+            </a>
+        </li>
+
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+                   asp-route-specialty="@Model.Specialty"
+                   asp-route-courseNumber="@Model.CourseNumber"
+                   asp-route-semesterNumber="@Model.SemesterNumber"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    Следующая
+                </a>
+            </li>
+        }
+    </ul>
+
+    <form method="get" class="d-inline-block" style="margin-left: 10px;">
+        <input type="hidden" name="specialty" value="@Model.Specialty" />
+        <input type="hidden" name="courseNumber" value="@Model.CourseNumber" />
+        <input type="hidden" name="semesterNumber" value="@Model.SemesterNumber" />
+        <input type="hidden" name="sortOrder" value="@(Model.SortViewModel.CurrentState)" />
+        <div class="input-group">
+            <input type="number" name="page" class="form-control"
+                   placeholder="Страница"
+                   min="1"
+                   max="@Model.PageViewModel.TotalPages"
+                   value="@Model.PageViewModel.PageNumber" />
+            <button type="submit" class="btn btn-primary">Перейти</button>
+        </div>
+    </form>
+</nav>
