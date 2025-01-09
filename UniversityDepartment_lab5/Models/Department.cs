@@ -13,7 +13,7 @@ public partial class Department
 
     public Guid FacultyId { get; set; }
 
-    public virtual Faculty Faculty { get; set; } = null!;
+    public virtual Faculty? Faculty { get; set; } = null!;
 
     public virtual ICollection<Specialty> Specialties { get; set; } = new List<Specialty>();
 }

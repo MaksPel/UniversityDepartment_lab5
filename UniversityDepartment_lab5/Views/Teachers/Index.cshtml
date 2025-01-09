@@ -1,0 +1,274 @@
+﻿@model UniversityDepartment_lab5.ViewModels.Teachers.TeachersViewModel;
+@using UniversityDepartment_lab5.ViewModels.Teachers;
+
+@{
+    ViewData["Title"] = "Преподаватели";
+}
+
+<h1>Преподаватели</h1>
+
+@using (Html.BeginForm("Index", "Teachers", FormMethod.Get, new { @class = "mb-3" }))
+{
+    <div class="row">
+        <div class="col-md-2">
+            @Html.TextBox("name", Model.Name, new { @class = "form-control", placeholder = "Имя" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("surname", Model.Surname, new { @class = "form-control", placeholder = "Фамилия" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("midname", Model.Midname, new { @class = "form-control", placeholder = "Отчество" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("position", Model.Position, new { @class = "form-control", placeholder = "Должность" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("age", Model.Age == 0 ? "" : Model.Age.ToString(), new { @class = "form-control", placeholder = "Возраст" })
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Фильтр</button>
+            <a asp-action="Index" class="btn btn-secondary">Сбросить</a>
+        </div>
+    </div>
+}
+
+<p>
+    <a asp-action="Create">Добавить преподавателя</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-name="@Model.Name"
+                   asp-route-surname="@Model.Surname"
+                   asp-route-midname="@Model.Midname"
+                   asp-route-position="@Model.Position"
+                   asp-route-age="@Model.Age"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc)">
+                    Имя
+                    @if (Model.SortViewModel.CurrentState == SortState.NameAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.NameDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-name="@Model.Name"
+                   asp-route-surname="@Model.Surname"
+                   asp-route-midname="@Model.Midname"
+                   asp-route-position="@Model.Position"
+                   asp-route-age="@Model.Age"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.SurnameAsc ? SortState.SurnameDesc : SortState.SurnameAsc)">
+                    Фамилия
+                    @if (Model.SortViewModel.CurrentState == SortState.SurnameAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.SurnameDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-name="@Model.Name"
+                   asp-route-surname="@Model.Surname"
+                   asp-route-midname="@Model.Midname"
+                   asp-route-position="@Model.Position"
+                   asp-route-age="@Model.Age"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.MidnameAsc ? SortState.MidnameDesc : SortState.MidnameAsc)">
+                    Отчество
+                    @if (Model.SortViewModel.CurrentState == SortState.MidnameAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.MidnameDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-name="@Model.Name"
+                   asp-route-surname="@Model.Surname"
+                   asp-route-midname="@Model.Midname"
+                   asp-route-position="@Model.Position"
+                   asp-route-age="@Model.Age"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.PositionAsc ? SortState.PositionDesc : SortState.PositionAsc)">
+                    Должность
+                    @if (Model.SortViewModel.CurrentState == SortState.PositionAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.PositionDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-name="@Model.Name"
+                   asp-route-surname="@Model.Surname"
+                   asp-route-midname="@Model.Midname"
+                   asp-route-position="@Model.Position"
+                   asp-route-age="@Model.Age"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.AgeAsc ? SortState.AgeDesc : SortState.AgeAsc)">
+                    Возраст
+                    @if (Model.SortViewModel.CurrentState == SortState.AgeAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.AgeDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Teachers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Midname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TeacherId">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.TeacherId">Детали</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TeacherId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+                   asp-route-name="@Model.Name"
+                   asp-route-surname="@Model.Surname"
+                   asp-route-midname="@Model.Midname"
+                   asp-route-position="@Model.Position"
+                   asp-route-age="@Model.Age"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    Назад
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(1 == Model.PageViewModel.PageNumber ? "active" : "")">
+            <a class="page-link" asp-action="Index"
+               asp-route-page="1"
+               asp-route-name="@Model.Name"
+               asp-route-surname="@Model.Surname"
+               asp-route-midname="@Model.Midname"
+               asp-route-position="@Model.Position"
+               asp-route-age="@Model.Age"
+               asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                1
+            </a>
+        </li>
+
+        @if (Model.PageViewModel.PageNumber > 3)
+        {
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        }
+
+        @for (int i = Math.Max(2, Model.PageViewModel.PageNumber - 1);
+        i <= Math.Min(Model.PageViewModel.TotalPages - 1, Model.PageViewModel.PageNumber + 1);
+        i++)
+        {
+            <li class="page-item @(i == Model.PageViewModel.PageNumber ? "active" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-name="@Model.Name"
+                   asp-route-surname="@Model.Surname"
+                   asp-route-midname="@Model.Midname"
+                   asp-route-position="@Model.Position"
+                   asp-route-age="@Model.Age"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    @i
+                </a>
+            </li>
+        }
+
+        @if (Model.PageViewModel.PageNumber < Model.PageViewModel.TotalPages - 2)
+        {
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        }
+
+        <li class="page-item @(Model.PageViewModel.TotalPages == Model.PageViewModel.PageNumber ? "active" : "")">
+            <a class="page-link" asp-action="Index"
+               asp-route-page="@Model.PageViewModel.TotalPages"
+               asp-route-name="@Model.Name"
+               asp-route-surname="@Model.Surname"
+               asp-route-midname="@Model.Midname"
+               asp-route-position="@Model.Position"
+               asp-route-age="@Model.Age"
+               asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                @Model.PageViewModel.TotalPages
+            </a>
+        </li>
+
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+                   asp-route-name="@Model.Name"
+                   asp-route-surname="@Model.Surname"
+                   asp-route-midname="@Model.Midname"
+                   asp-route-position="@Model.Position"
+                   asp-route-age="@Model.Age"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    Далее
+                </a>
+            </li>
+        }
+    </ul>
+
+    <form method="get" class="d-inline-block" style="margin-left: 10px;">
+        <input type="hidden" name="name" value="@Model.Name" />
+        <input type="hidden" name="surname" value="@Model.Surname" />
+        <input type="hidden" name="midname" value="@Model.Midname" />
+        <input type="hidden" name="position" value="@Model.Position" />
+        <input type="hidden" name="age" value="@Model.Age" />
+        <input type="hidden" name="sortOrder" value="@(Model.SortViewModel.CurrentState)" />
+        <div class="input-group">
+            <input type="number" name="page" class="form-control"
+                   placeholder="Page"
+                   min="1"
+                   max="@Model.PageViewModel.TotalPages"
+                   value="@Model.PageViewModel.PageNumber" />
+            <button type="submit" class="btn btn-primary">Перейти</button>
+        </div>
+    </form>
+</nav>
+

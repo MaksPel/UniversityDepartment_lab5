@@ -1,0 +1,48 @@
+﻿@model UniversityDepartment_lab5.Models.Subject
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Subject</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LectureHours)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LectureHours)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PracticalHours)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PracticalHours)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LabHours)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LabHours)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReportingType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReportingType)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.SubjectId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

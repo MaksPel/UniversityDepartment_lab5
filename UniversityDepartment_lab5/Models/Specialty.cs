@@ -13,5 +13,5 @@ public partial class Specialty
 
     public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
 
-    public virtual Department Department { get; set; } = null!;
+    public virtual Department? Department { get; set; } = null!;
 }

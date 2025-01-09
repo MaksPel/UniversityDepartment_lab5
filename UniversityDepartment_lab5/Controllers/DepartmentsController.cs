@@ -104,7 +104,7 @@ namespace UniversityDepartment_lab5.Controllers
         // GET: Departments/Create
         public IActionResult Create()
         {
-            ViewData["FacultyId"] = new SelectList(_context.Faculties, "FacultyId", "FacultyId");
+            ViewData["FacultyId"] = new SelectList(_context.Faculties, "FacultyId", "Name");
             return View();
         }
 
@@ -122,7 +122,7 @@ namespace UniversityDepartment_lab5.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FacultyId"] = new SelectList(_context.Faculties, "FacultyId", "FacultyId", department.FacultyId);
+            ViewData["FacultyId"] = new SelectList(_context.Faculties, "FacultyId", "Name", department.FacultyId);
             return View(department);
         }
 
@@ -139,7 +139,7 @@ namespace UniversityDepartment_lab5.Controllers
             {
                 return NotFound();
             }
-            ViewData["FacultyId"] = new SelectList(_context.Faculties, "FacultyId", "FacultyId", department.FacultyId);
+            ViewData["FacultyId"] = new SelectList(_context.Faculties, "FacultyId", "Name", department.FacultyId);
             return View(department);
         }
 
@@ -175,7 +175,7 @@ namespace UniversityDepartment_lab5.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FacultyId"] = new SelectList(_context.Faculties, "FacultyId", "FacultyId", department.FacultyId);
+            ViewData["FacultyId"] = new SelectList(_context.Faculties, "FacultyId", "Name", department.FacultyId);
             return View(department);
         }
 

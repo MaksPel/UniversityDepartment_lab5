@@ -1,0 +1,269 @@
+﻿@model UniversityDepartment_lab5.ViewModels.Subjects.SubjectsViewModel
+@using UniversityDepartment_lab5.ViewModels.Subjects
+
+@{
+    ViewData["Title"] = "Предметы";
+}
+
+<h1>Предметы</h1>
+
+@using (Html.BeginForm("Index", "Subjects", FormMethod.Get, new { @class = "mb-3" }))
+{
+    <div class="row">
+        <div class="col-md-2">
+            @Html.TextBox("name", Model.Name, new { @class = "form-control", placeholder = "Название предмета" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("reportingType", Model.ReportingType, new { @class = "form-control", placeholder = "Тип отчётности" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("lectureHours", Model.LectureHours == 0 ? "" : Model.LectureHours.ToString(), new { @class = "form-control", placeholder = "Часы лекций" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("practicalHours", Model.PracticalHours == 0 ? "" : Model.PracticalHours.ToString(), new { @class = "form-control", placeholder = "Часы практики" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBox("labHours", Model.LabHours == 0 ? "" : Model.LabHours.ToString(), new { @class = "form-control", placeholder = "Лабораторные часы" })
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Фильтровать</button>
+            <a asp-action="Index" class="btn btn-secondary">Сбросить</a>
+        </div>
+    </div>
+}
+
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber)"
+                   asp-route-name="@Model.Name"
+                   asp-route-reportingType="@Model.ReportingType"
+                   asp-route-lectureHours="@Model.LectureHours"
+                   asp-route-labHours="@Model.LabHours"
+                   asp-route-practicalHours="@Model.PracticalHours"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc)">
+                    Название
+                    @if (Model.SortViewModel.CurrentState == SortState.NameAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.NameDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber)"
+                   asp-route-name="@Model.Name"
+                   asp-route-reportingType="@Model.ReportingType"
+                   asp-route-lectureHours="@Model.LectureHours"
+                   asp-route-labHours="@Model.LabHours"
+                   asp-route-practicalHours="@Model.PracticalHours"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.ReportingTypeAsc ? SortState.ReportingTypeDesc : SortState.ReportingTypeAsc)">
+                    Тип отчётности
+                    @if (Model.SortViewModel.CurrentState == SortState.ReportingTypeAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.ReportingTypeDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber)"
+                   asp-route-name="@Model.Name"
+                   asp-route-reportingType="@Model.ReportingType"
+                   asp-route-lectureHours="@Model.LectureHours"
+                   asp-route-labHours="@Model.LabHours"
+                   asp-route-practicalHours="@Model.PracticalHours"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.LectureHoursAsc ? SortState.LectureHoursDesc : SortState.LectureHoursAsc)">
+                    Часы лекций
+                    @if (Model.SortViewModel.CurrentState == SortState.LectureHoursAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.LectureHoursDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber)"
+                   asp-route-name="@Model.Name"
+                   asp-route-reportingType="@Model.ReportingType"
+                   asp-route-lectureHours="@Model.LectureHours"
+                   asp-route-labHours="@Model.LabHours"
+                   asp-route-practicalHours="@Model.PracticalHours"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.PracticalHoursAsc ? SortState.PracticalHoursDesc : SortState.PracticalHoursAsc)">
+                    Часы практики
+                    @if (Model.SortViewModel.CurrentState == SortState.PracticalHoursAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.PracticalHoursDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber)"
+                   asp-route-name="@Model.Name"
+                   asp-route-reportingType="@Model.ReportingType"
+                   asp-route-lectureHours="@Model.LectureHours"
+                   asp-route-labHours="@Model.LabHours"
+                   asp-route-practicalHours="@Model.PracticalHours"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState == SortState.LabHoursAsc ? SortState.LabHoursDesc : SortState.LabHoursAsc)">
+                    Лабораторные часы
+                    @if (Model.SortViewModel.CurrentState == SortState.LabHoursAsc)
+                    {
+                        <span>&uarr;</span>
+                    }
+                    else if (Model.SortViewModel.CurrentState == SortState.LabHoursDesc)
+                    {
+                        <span>&darr;</span>
+                    }
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Subjects)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.ReportingType</td>
+                <td>@item.LectureHours</td>
+                <td>@item.PracticalHours</td>
+                <td>@item.LabHours</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.SubjectId">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.SubjectId">Подробнее</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SubjectId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Навигация по страницам">
+    <ul class="pagination">
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+                   asp-route-name="@Model.Name"
+                   asp-route-reportingType="@Model.ReportingType"
+                   asp-route-lectureHours="@Model.LectureHours"
+                   asp-route-labHours="@Model.LabHours"
+                   asp-route-practicalHours="@Model.PracticalHours"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    Назад
+                </a>
+            </li>
+        }
+
+        <li class="page-item @(1 == Model.PageViewModel.PageNumber ? "active" : "")">
+            <a class="page-link" asp-action="Index"
+               asp-route-page="1"
+               asp-route-name="@Model.Name"
+               asp-route-reportingType="@Model.ReportingType"
+               asp-route-lectureHours="@Model.LectureHours"
+               asp-route-labHours="@Model.LabHours"
+               asp-route-practicalHours="@Model.PracticalHours"
+               asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                1
+            </a>
+        </li>
+
+        @if (Model.PageViewModel.PageNumber > 3)
+        {
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        }
+
+        @for (int i = Math.Max(2, Model.PageViewModel.PageNumber - 1);
+        i <= Math.Min(Model.PageViewModel.TotalPages - 1, Model.PageViewModel.PageNumber + 1);
+        i++)
+        {
+            <li class="page-item @(i == Model.PageViewModel.PageNumber ? "active" : "")">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-name="@Model.Name"
+                   asp-route-reportingType="@Model.ReportingType"
+                   asp-route-lectureHours="@Model.LectureHours"
+                   asp-route-labHours="@Model.LabHours"
+                   asp-route-practicalHours="@Model.PracticalHours"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    @i
+                </a>
+            </li>
+        }
+
+        @if (Model.PageViewModel.PageNumber < Model.PageViewModel.TotalPages - 2)
+        {
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        }
+
+        <li class="page-item @(Model.PageViewModel.TotalPages == Model.PageViewModel.PageNumber ? "active" : "")">
+            <a class="page-link" asp-action="Index"
+               asp-route-page="@Model.PageViewModel.TotalPages"
+               asp-route-name="@Model.Name"
+               asp-route-reportingType="@Model.ReportingType"
+               asp-route-lectureHours="@Model.LectureHours"
+               asp-route-labHours="@Model.LabHours"
+               asp-route-practicalHours="@Model.PracticalHours"
+               asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                @Model.PageViewModel.TotalPages
+            </a>
+        </li>
+
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index"
+                   asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+                   asp-route-name="@Model.Name"
+                   asp-route-reportingType="@Model.ReportingType"
+                   asp-route-lectureHours="@Model.LectureHours"
+                   asp-route-labHours="@Model.LabHours"
+                   asp-route-practicalHours="@Model.PracticalHours"
+                   asp-route-sortOrder="@(Model.SortViewModel.CurrentState)">
+                    Вперёд
+                </a>
+            </li>
+        }
+    </ul>
+
+    <form method="get" class="d-inline-block" style="margin-left: 10px;">
+        <input type="hidden" name="name" value="@Model.Name" />
+        <input type="hidden" name="reportingType" value="@Model.ReportingType" />
+        <input type="hidden" name="lectureHours" value="@Model.LectureHours" />
+        <input type="hidden" name="labHours" value="@Model.LabHours" />
+        <input type="hidden" name="practicalHours" value="@Model.PracticalHours" />
+        <input type="hidden" name="sortOrder" value="@(Model.SortViewModel.CurrentState)" />
+        <div class="input-group">
+            <input type="number" name="page" class="form-control"
+                   placeholder="Страница"
+                   min="1"
+                   max="@Model.PageViewModel.TotalPages"
+                   value="@Model.PageViewModel.PageNumber" />
+            <button type="submit" class="btn btn-primary">Перейти</button>
+        </div>
+    </form>
+</nav>
